@@ -37,6 +37,7 @@ external: <%= interface %>
 <% end %>
 <% end %>
 
+
 <% auth_types.each do |type| %>
 <% node[:dante][:auth][:methods][type].each do |auth_method| %>
 <%= type %>method: <%= auth_method %>
