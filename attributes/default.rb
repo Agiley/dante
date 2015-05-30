@@ -14,7 +14,6 @@ default[:dante][:logging][:log_file_path]         =   '/var/log/sockd/sockd.log'
 # This is a shorthand for quickly setting one or several ip-addresses and a port
 # By setting ip addresses and port, the settings for internals/externals won't be used
 # If you'd like to define your own interfaces or ip-addresses for internals/externals, make sure to set the values below to nil!
-
 default[:dante][:server][:ip_addresses]           =   [node[:ipaddress]]
 default[:dante][:server][:port]                   =   1080
 
