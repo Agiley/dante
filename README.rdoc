@@ -1,0 +1,9 @@
+= DESCRIPTION:
+This cookbook installs the Dante SOCKS proxy server from source
+
+= REQUIREMENTS:
+
+= ATTRIBUTES: 
+
+= USAGE:
+include_recipe "dante::source"
