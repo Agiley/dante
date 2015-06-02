@@ -27,8 +27,6 @@ bash "Build and Install Dante" do
     make
     make install
   EOH
-  
-  not_if { ::File.exists?(node[:dante][:daemon][:binary]) }
 end
 
 if node[:dante][:auth][:users][:login] && node[:dante][:auth][:users][:password]
