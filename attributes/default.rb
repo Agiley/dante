@@ -9,6 +9,9 @@ default[:dante][:daemon][:name]                   =   'sockd'
 # Logging
 default[:dante][:logging][:log_output]            =   'syslog stdout /var/log/sockd/sockd.log'
 default[:dante][:logging][:log_file_path]         =   '/var/log/sockd/sockd.log'
+default[:dante][:logging][:error_log]             =   'syslog stdout /var/log/sockd/sockd.error.log'
+default[:dante][:logging][:error_log_file_path]   =   '/var/log/sockd/sockd.error.log'
+default[:dante][:logging][:debug]                 =   0
 
 # Server
 # This is a shorthand for quickly setting one or several ip-addresses and a port
@@ -48,10 +51,10 @@ default[:dante][:auth][:users][:unprivileged]     =   "nobody"
 default[:dante][:auth][:users][:libwrap]          =   nil # Specify a user if libwrap is used
 
 # Rules
-default[:dante][:rules][:client][:pass]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect error'}]
-default[:dante][:rules][:client][:block]          =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect error'}]
-default[:dante][:rules][:socks][:pass]            =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect error'}]
-default[:dante][:rules][:socks][:block]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect error'}]
+default[:dante][:rules][:client][:pass]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
+default[:dante][:rules][:client][:block]          =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
+default[:dante][:rules][:socks][:pass]            =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
+default[:dante][:rules][:socks][:block]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
 
 # Connection options
 default[:dante][:connection][:negotiate_timeout]  =   nil

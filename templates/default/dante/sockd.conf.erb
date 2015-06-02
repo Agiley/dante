@@ -1,8 +1,9 @@
 <% auth_types   =   [:client, :socks] %>
 <% rule_types   =   [:pass, :block] %>
 
+errorlog: <%= node[:dante][:logging][:error_log] %>
 logoutput: <%= node[:dante][:logging][:log_output] %>
-
+debug: <%= node[:dante][:logging][:debug] %>
 
 <% if node[:dante][:internal][:protocol] %>
 internal.protocol: <%= node[:dante][:internal][:protocol] %>

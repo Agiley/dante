@@ -44,6 +44,16 @@ if node[:dante][:auth][:users][:login] && node[:dante][:auth][:users][:password]
   end
 end
 
+directory ::File.dirname(node[:dante][:logging][:error_log_file_path]) do
+  owner   node[:dante][:auth][:users][:privileged]
+  group   node[:dante][:auth][:users][:privileged]
+  mode    00755
+  
+  action  :create
+  
+  only_if { node[:dante][:logging][:error_log_file_path] && !::File.exists?(::File.dirname(node[:dante][:logging][:error_log_file_path])) }
+end
+
 directory ::File.dirname(node[:dante][:logging][:log_file_path]) do
   owner   node[:dante][:auth][:users][:privileged]
   group   node[:dante][:auth][:users][:privileged]
