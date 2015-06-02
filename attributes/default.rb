@@ -51,10 +51,10 @@ default[:dante][:auth][:users][:unprivileged]     =   "nobody"
 default[:dante][:auth][:users][:libwrap]          =   nil # Specify a user if libwrap is used
 
 # Rules
-default[:dante][:rules][:client][:pass]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
-default[:dante][:rules][:client][:block]          =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
-default[:dante][:rules][:socks][:pass]            =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
-default[:dante][:rules][:socks][:block]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop tcpinfo error'}]
+default[:dante][:rules][:client][:pass]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
+default[:dante][:rules][:client][:block]          =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
+default[:dante][:rules][:socks][:pass]            =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
+default[:dante][:rules][:socks][:block]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
 
 # Connection options
 default[:dante][:connection][:negotiate_timeout]  =   nil
