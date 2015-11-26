@@ -42,24 +42,30 @@ if node[:dante][:auth][:users][:login] && node[:dante][:auth][:users][:password]
   end
 end
 
-directory ::File.dirname(node[:dante][:logging][:error_log_file_path]) do
-  owner   node[:dante][:auth][:users][:privileged]
-  group   node[:dante][:auth][:users][:privileged]
-  mode    00755
-  
-  action  :create
-  
-  only_if { node[:dante][:logging][:error_log_file_path] && !::File.exists?(::File.dirname(node[:dante][:logging][:error_log_file_path])) }
-end
+log_dirs = [
+  ::File.dirname(node[:dante][:logging][:log_file_path]),
+  ::File.dirname(node[:dante][:logging][:error_log_file_path])
+].uniq
 
-directory ::File.dirname(node[:dante][:logging][:log_file_path]) do
-  owner   node[:dante][:auth][:users][:privileged]
-  group   node[:dante][:auth][:users][:privileged]
-  mode    00755
+log_dirs.each do |log_dir|
+  directory log_dir do
+    owner   node[:dante][:auth][:users][:privileged]
+    group   node[:dante][:auth][:users][:privileged]
+    mode    00755
   
-  action  :create
+    action  :create
   
-  only_if { node[:dante][:logging][:log_file_path] && !::File.exists?(::File.dirname(node[:dante][:logging][:log_file_path])) }
+    only_if { !::File.exists?(log_dir) }
+  end
+  
+  logrotate_app "sockd" do
+    cookbook "logrotate"
+    path "#{log_dir}/*.log"
+    enable true
+    frequency "daily"
+    rotate 2
+    options ["compress", "copytruncate", "delaycompress", "missingok"]
+  end
 end
 
 template "/etc/init.d/sockd" do
