@@ -46,7 +46,7 @@ case "$1" in
 	echo -n "Starting $DESC: "
 	touch_pidfile
 	start-stop-daemon --start --quiet --oknodo --pidfile $PIDFILE \
-		--exec $DAEMON -- -D
+		--exec $DAEMON -- -f $CONFFILE -D
 	echo "$NAME."
 	;;
   stop)
@@ -78,7 +78,7 @@ case "$1" in
 	sleep 1
 	touch_pidfile
 	start-stop-daemon --start --quiet --pidfile $PIDFILE \
-	  --exec $DAEMON -- -D
+	  --exec $DAEMON -- -f $CONFFILE -D
 	echo "$NAME."
 	;;
   *)
