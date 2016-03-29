@@ -16,7 +16,7 @@ DAEMON=<%= node[:dante][:daemon][:binary] %>
 NAME=<%= node[:dante][:daemon][:name] %>
 DESC="Dante SOCKS daemon"
 PIDFILE=/var/run/$NAME.pid
-CONFFILE=/etc/$NAME.conf
+CONFFILE=<%= node[:dante][:configuration_file] %>
 
 test -f $DAEMON || exit 0
 

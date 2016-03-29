@@ -80,7 +80,15 @@ service 'sockd' do
   action [:start, :stop, :restart, :reload]
 end
 
-template "/etc/sockd.conf" do
+directory ::File.dirname(node[:dante][:configuration_file]) do
+  owner "root"
+  group "root"
+  mode 0755
+  action :create
+  not_if { File.exist?(::File.dirname(node[:dante][:configuration_file])) }
+end
+
+template node[:dante][:configuration_file] do
   cookbook "dante"
   source "dante/sockd.conf.erb"
   owner "root"

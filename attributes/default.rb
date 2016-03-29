@@ -6,6 +6,9 @@ default[:dante][:source][:url]                    =   'https://www.inet.no/dante
 default[:dante][:daemon][:binary]                 =   '/usr/local/sbin/sockd'
 default[:dante][:daemon][:name]                   =   'sockd'
 
+# Configuration
+default[:dante][:configuration_file]              =   '/etc/sockd/sockd.conf'
+
 # Logging
 default[:dante][:logging][:log_output]            =   'syslog stdout /var/log/sockd/sockd.log'
 default[:dante][:logging][:log_file_path]         =   '/var/log/sockd/sockd.log'
@@ -51,10 +54,11 @@ default[:dante][:auth][:users][:unprivileged]     =   "nobody"
 default[:dante][:auth][:users][:libwrap]          =   nil # Specify a user if libwrap is used
 
 # Rules
-default[:dante][:rules][:client][:pass]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
-default[:dante][:rules][:client][:block]          =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
-default[:dante][:rules][:socks][:pass]            =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
-default[:dante][:rules][:socks][:block]           =   [{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
+default[:dante][:rules][:client][:pass]           =   [{:from => '0.0.0.0/0', :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
+default[:dante][:rules][:socks][:pass]            =   [{:from => '0.0.0.0/0', :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
+
+default[:dante][:rules][:client][:block]          =   nil #[{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
+default[:dante][:rules][:socks][:block]           =   nil #[{:from => "0.0.0.0/0", :to => '0.0.0.0/0', :log => 'connect disconnect ioop error'}]
 
 # Connection options
 default[:dante][:connection][:negotiate_timeout]  =   nil

@@ -83,13 +83,14 @@ srchost: <%= node[:dante][:connection][:src_host] %>
 <%= type %> <%= rule_type %>
 {
   from: <%= rule[:from] %><%= " port #{rule[:port_range]}" if rule[:port_range] %> to: <%= rule[:to] %>
-  <%= "log: #{rule[:log]}"                    if rule[:log] -%>
-  <%= "protocol: #{rule[:protocol]}"          if rule[:protocol] -%>
-  <%= "command: #{rule[:command]}"            if rule[:command] -%>
-  <%= "libwrap: #{rule[:libwrap]}"            if rule[:libwrap] -%>
-  <%= "clientmethod: #{rule[:clientmethod]}"  if rule[:clientmethod] -%>
-  <%= "socksmethod: #{rule[:socksmethod]}"    if rule[:socksmethod] -%>
-  
+  <%= "log: #{rule[:log]}"                              if rule[:log] -%>
+  <%= "session.max: #{rule[:sessions_max]}"             if rule[:sessions_max] -%>
+  <%= "session.throttle: #{rule[:sessions_throttle]}"   if rule[:sessions_throttle] -%>
+  <%= "protocol: #{rule[:protocol]}"                    if rule[:protocol] -%>
+  <%= "command: #{rule[:command]}"                      if rule[:command] -%>
+  <%= "libwrap: #{rule[:libwrap]}"                      if rule[:libwrap] -%>
+  <%= "clientmethod: #{rule[:clientmethod]}"            if rule[:clientmethod] -%>
+  <%= "socksmethod: #{rule[:socksmethod]}"              if rule[:socksmethod] -%>
 }
 
 <% end if node[:dante][:rules][type][rule_type] && node[:dante][:rules][type][rule_type].any? %>
