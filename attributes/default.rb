@@ -5,6 +5,7 @@ default[:dante][:source][:url]                    =   'https://www.inet.no/dante
 # Daemon / Init
 default[:dante][:daemon][:binary]                 =   '/usr/local/sbin/sockd'
 default[:dante][:daemon][:name]                   =   'sockd'
+default[:dante][:daemon][:pid_file]               =   "/var/run/#{node[:dante][:daemon][:name]}.pid"
 
 # Configuration
 default[:dante][:configuration_file]              =   '/etc/sockd/sockd.conf'

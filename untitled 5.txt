@@ -1,0 +1,25 @@
+location ~ \.php$ {
+  include includes/rate_limit.conf;
+  
+  proxy_intercept_errors on;
+  
+  try_files $uri =404;
+  
+  fastcgi_split_path_info ^(.+\.php)(/.+)$;
+  
+  fastcgi_keep_conn on;
+  
+  include         fastcgi_params;
+  fastcgi_index   index.php;
+  fastcgi_param   HTTPS $fastcgi_https;
+  fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  fastcgi_param   SERVER_NAME $host;
+
+  fastcgi_buffers 8 256k;
+  fastcgi_buffer_size 128k;
+
+  fastcgi_read_timeout 300;
+  fastcgi_send_timeout 120;
+  
+  fastcgi_pass    backend;
+}
