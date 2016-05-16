@@ -97,16 +97,15 @@ directory ::File.dirname(node[:dante][:configuration_file]) do
   not_if { File.exist?(::File.dirname(node[:dante][:configuration_file])) }
 end
 
-service 'sockd' do
-  service_name node[:dante][:daemon][:name]
-  provider platform?('ubuntu') ? find_provider : nil
-  action [:enable, :start]
-end
-
 template node[:dante][:configuration_file] do
   source "dante/sockd.conf.erb"
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, resources(:service => "sockd"), :immediately
+end
+
+service 'sockd' do
+  service_name node[:dante][:daemon][:name]
+  provider platform?('ubuntu') ? find_provider : nil
+  action [:enable, :start]
 end
