@@ -69,15 +69,24 @@ log_dirs.each do |log_dir|
 end
 
 template "/etc/init.d/sockd" do
-  cookbook "dante"
-  source "dante/init.d.erb"
+  source "init/init.d.erb"
   owner "root"
   group "root"
   mode 0755
+  only_if { platform?('ubuntu') && Chef::VersionConstraint.new('< 15.04').include?(node['platform_version']) }
 end
 
-service 'sockd' do
-  action [:start, :stop, :restart, :reload]
+template "/etc/systemd/system/sockd.service" do
+  source 'systemd/sockd.service.erb'
+  owner 'root'
+  group 'root'
+  mode 0644
+  notifies :run, 'execute[systemctl daemon-reload]', :immediately
+  only_if { platform?('ubuntu') && Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version']) }
+end
+
+execute 'systemctl daemon-reload' do
+  action :nothing
 end
 
 directory ::File.dirname(node[:dante][:configuration_file]) do
@@ -88,11 +97,16 @@ directory ::File.dirname(node[:dante][:configuration_file]) do
   not_if { File.exist?(::File.dirname(node[:dante][:configuration_file])) }
 end
 
+service 'sockd' do
+  service_name node[:dante][:daemon][:name]
+  provider platform?('ubuntu') ? find_provider : nil
+  action [:enable, :start]
+end
+
 template node[:dante][:configuration_file] do
-  cookbook "dante"
   source "dante/sockd.conf.erb"
   owner "root"
   group "root"
   mode 0644
-  notifies :start, resources(:service => "sockd"), :immediately
+  notifies :restart, resources(:service => "sockd"), :immediately
 end

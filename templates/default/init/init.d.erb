@@ -15,7 +15,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=<%= node[:dante][:daemon][:binary] %>
 NAME=<%= node[:dante][:daemon][:name] %>
 DESC="Dante SOCKS daemon"
-PIDFILE=/var/run/$NAME.pid
+PIDFILE=<%= node[:dante][:daemon][:pid_file] %>
 CONFFILE=<%= node[:dante][:configuration_file] %>
 
 test -f $DAEMON || exit 0
