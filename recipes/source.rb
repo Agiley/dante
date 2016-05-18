@@ -106,6 +106,6 @@ end
 
 service 'sockd' do
   service_name node[:dante][:daemon][:name]
-  provider platform?('ubuntu') ? find_provider : nil
   action [:enable, :start]
+  provider (platform?('ubuntu') && Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version'])) ? Chef::Provider::Service::Systemd : nil
 end
