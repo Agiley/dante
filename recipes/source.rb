@@ -33,6 +33,8 @@ if node[:dante][:auth][:users][:login] && node[:dante][:auth][:users][:password]
   # The following packages are required in order to set the password for the login user
   %w{ ruby-dev ruby-shadow }.each do |a_package|
     package a_package
+    retries 3
+    retry_delay 3
   end
   
   user_account node[:dante][:auth][:users][:login] do
